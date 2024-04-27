@@ -1,6 +1,7 @@
 "use client"
 import BackGround from '@/components/bg';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { MdEmail } from "react-icons/md";
 
 export default function Home() {
@@ -29,6 +30,8 @@ export default function Home() {
      })
      console.log(await response.json())
      setLoading(false)
+     toast.success("Email is Sended Successfully !!")
+    
    } catch (error) {
     console.log(error);
    }
