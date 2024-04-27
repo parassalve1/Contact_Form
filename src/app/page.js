@@ -1,40 +1,50 @@
 "use client"
 import BackGround from '@/components/bg';
 import { useState } from 'react';
+import { MdEmail } from "react-icons/md";
 
 export default function Home() {
   const[email , setEmail] = useState('');
   const[name , setName] = useState('');
   const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
+  const[loading , setLoading] = useState(false);
 
   const sendMail = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/sendEmail', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        email,
-        name,
-        subject,
-        message
-      })
-    })
-    console.log(await response.json())
+   try {
+    setLoading(true)
+     const response = await fetch('/api/sendEmail', {
+       method: 'POST',
+       headers: {
+         'content-type': 'application/json'
+       },
+       body: JSON.stringify({
+         email,
+         name,
+         subject,
+         message
+       })
+     })
+     console.log(await response.json())
+     setLoading(false)
+   } catch (error) {
+    console.log(error);
+   }
   }
   return (
     <main className="flex h-screen flex-col items-center justify-center p-24">
       <form onSubmit={sendMail} className="h-full w-1/3 space-y-6 z-[10]">
         <div className="flex flex-col items-start w-full justify-start">
-          <h1 className="text-4xl text-white font-extrabold">Get  In <span className='text-5xl text-orange-400'>Contact</span></h1>
+          <h1 className="text-5xl text-white font-extrabold   hover:underline ">Get  In 
+          <span className='text-6xl hover:no-underline text-orange-400'> Contact</span></h1>
         </div>
         <div className="relative flex flex-col space-y-1">
           <label htmlFor="title" className="text-sm font-semibold text-white">
             Email
           </label>
+         
           <input
             name="email"
             type="email"
@@ -45,9 +55,11 @@ export default function Home() {
               setEmail(e.target.value)
             }}
             placeholder="Email"
-            className="rounded-xl border-2 border-white p-2"
+            className="relative rounded-xl border-2 border-white p-2"
           />
         </div>
+        
+
         <div className="relative flex flex-col space-y-1">
           <label htmlFor="title" className="text-sm font-semibold text-white">
             Name or Company Name
@@ -101,7 +113,7 @@ export default function Home() {
           />
         </div>
         <button type='submit' className=" flex w-1/2 items-center justify-center space-x-3 rounded-lg bg-blue-600 p-2 text-white shadow-blue-500 hover:bg-blue-700 hover:shadow-md">
-          <span>Send Message</span>
+          <span>{loading? "Sending" : 'send'}</span>
         </button>
       </form>
       <BackGround />
