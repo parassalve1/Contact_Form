@@ -37,8 +37,8 @@ export default function Home() {
    }
   }
   return (
-    <main className="flex h-screen flex-col items-center justify-center p-24">
-      <form onSubmit={sendMail} className="h-full w-1/3 space-y-6 z-[10]">
+    <main className="flex h-screen flex-col items-center justify-center pt-24 ">
+      <form onSubmit={sendMail} className="h-full w-[80%] md:w-1/3 space-y-6 z-[10]">
         <div className="flex flex-col items-start w-full justify-start">
           <h1 className="text-5xl text-white font-extrabold   hover:underline ">Get  In 
           <span className='text-6xl hover:no-underline text-orange-400'> Contact</span></h1>
